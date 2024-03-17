@@ -7,15 +7,13 @@ import SubmitForm from "./SubmitForm";
 import TodoList from "./TodoList";
 import { Modal } from "antd";
 import "antd/dist/antd.css";
-import {
-  EditOutlined,
-  PlusCircleOutlined} from "@ant-design/icons";
+import { EditOutlined, PlusCircleOutlined } from "@ant-design/icons";
 import { config } from "../index";
 
 class Home extends React.Component {
   state = {
     tasks: [],
-    isAddModalVisible: false
+    isAddModalVisible: false,
   };
 
   showModal = () => {
@@ -30,14 +28,14 @@ class Home extends React.Component {
     this.setState({ isAddModalVisible: false });
   };
 
-  handleSubmit = task => {
-    axios.post(`${config.endpoint}/todos`, task).then(res => {
+  handleSubmit = (task) => {
+    axios.post(`${config.endpoint}/todos`, task).then((res) => {
       console.log("Recieved data ", res.data);
       this.setState({ tasks: [...this.state.tasks, res.data] });
     });
   };
 
-  handleDelete = index => {
+  handleDelete = (index) => {
     const newArr = [...this.state.tasks];
     let pos = -1;
     for (let i = 0; i < newArr.length; i++) {
@@ -49,14 +47,14 @@ class Home extends React.Component {
     if (pos === -1) return;
     let task = newArr[pos];
     console.log(task);
-    axios.delete(`${config.endpoint}/todos/${task._id}`).then(res => {
+    axios.delete(`${config.endpoint}/todos/${task._id}`).then((res) => {
       console.log("In Frontend", res.data);
     });
     newArr.splice(pos, 1);
     this.setState({ tasks: newArr });
   };
 
-  handleUpdate = async task => {
+  handleUpdate = async (task) => {
     const newArr = [...this.state.tasks];
 
     let pos = -1;
@@ -74,7 +72,7 @@ class Home extends React.Component {
     let updateTask = newArr[pos];
     console.log(updateTask);
 
-    await axios.put(`${config.endpoint}/todos`, updateTask).then(res => {
+    await axios.put(`${config.endpoint}/todos`, updateTask).then((res) => {
       console.log("Updating In Frontend", res.data);
     });
     this.setState({ tasks: newArr });
@@ -84,7 +82,7 @@ class Home extends React.Component {
     let todoData = [];
     await axios
       .get(`${config.endpoint}/todos`)
-      .then(res => {
+      .then((res) => {
         for (let i = 0; i < res.data.length; i++) {
           todoData.push(res.data[i]);
         }
@@ -127,7 +125,7 @@ class Home extends React.Component {
         <header className="header">
           <div className="header-content">
             <div>
-              <p className="header-text">Crio Notes App</p>
+              <p className="header-text">notes app</p>
             </div>
 
             <div className="header-action-container">

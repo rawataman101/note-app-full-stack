@@ -4,6 +4,7 @@ const mongoose = require("mongoose");
 const captureDateMiddleware = require("./middleware/middleware");
 const cors = require("cors");
 const config = require("./config/config");
+const DB_URI = config.mongoose.url;
 
 const app = express();
 
@@ -18,7 +19,13 @@ app.use("/v1", routes);
 
 // TODO - Create a MongoDB connection using Mongoose
 
-// Start the Node server
-app.listen(config.port, () => {
-  console.log(`App is running on port ${config.port}`);
-});
+// Start the MongoDB and Node server
+mongoose
+  .connect(`${DB_URI}`)
+  .then(() => {
+    console.log("Connected to DB at", DB_URI);
+    app.listen(8082, () => {
+      console.log("Listening at port 8082 ...");
+    });
+  })
+  .catch((e) => console.log("Failed to connect to DB", e));

@@ -11,7 +11,18 @@ const todoSchema = new mongoose.Schema(
       type: Date,
       required: true,
     },
+    endDate: {
+      type: Date,
+      requried: true,
+    },
+    pending: {
+      type: Boolean,
+      default: true,
+    },
   },
+  {
+    timestamps: true,
+  }
 );
 
-// module.exports = mongoose.model("Todo", );
+module.exports = mongoose.model("Todo", todoSchema);
